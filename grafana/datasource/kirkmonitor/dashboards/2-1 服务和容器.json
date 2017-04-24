@@ -523,7 +523,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"}",
+              "expr": "sum(kirk_container_memory_usage{podip=~\"$podip\", role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",  role=~\"user|net\"}) by (podip)",
               "intervalFactor": 2,
               "legendFormat": "{{podip}}",
               "refId": "B",
@@ -603,21 +603,21 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "avg(1 - ( sum(kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"}) by (podip) ) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
+              "expr": "avg(1 - ( sum(kirk_container_memory_usage{podip=~\"$podip\", role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"}) by (podip) ) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "Free - avg",
               "refId": "A",
               "step": 240
             },
             {
-              "expr": "min(1 - ( sum(kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"}) by (podip) ) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
+              "expr": "min(1 - ( sum(kirk_container_memory_usage{podip=~\"$podip\",role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"}) by (podip) ) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "Free - min",
               "refId": "B",
               "step": 240
             },
             {
-              "expr": "bottomk(5, 1 - sum( kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"} ) by (podip) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
+              "expr": "bottomk(5, 1 - sum( kirk_container_memory_usage{podip=~\"$podip\",role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"} ) by (podip) / sum(kirk_container_memory_quota{podip=~\"$podip\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "{{podip}}",
               "refId": "C",
@@ -715,21 +715,21 @@
               "step": 240
             },
             {
-              "expr": "avg(kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"})",
+              "expr": "avg(sum(kirk_container_memory_usage{podip=~\"$podip\",role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "Used - avg",
               "refId": "B",
               "step": 240
             },
             {
-              "expr": "max(kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"})",
+              "expr": "max(sum(kirk_container_memory_usage{podip=~\"$podip\",role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "Used - max",
               "refId": "C",
               "step": 240
             },
             {
-              "expr": "topk(5, kirk_container_memory_usage{podip=~\"$podip\"} + kirk_container_memory_cache{podip=~\"$podip\"})",
+              "expr": "topk(5, sum(kirk_container_memory_usage{podip=~\"$podip\",role=~\"user|net\"} + kirk_container_memory_cache{podip=~\"$podip\",role=~\"user|net\"}) by (podip))",
               "intervalFactor": 2,
               "legendFormat": "{{podip}}",
               "refId": "D",
